@@ -1,8 +1,6 @@
 <template>
   <AdminCommonGrid
     :name="$t('partymeister-accounting.sales.sales')"
-    create-route="admin.partymeister-accounting.sales.create"
-    :create-label="$t('partymeister-accounting.sales.new')"
     :rows="rows"
     :columns="columns"
     :meta="meta"
@@ -50,22 +48,6 @@ export default defineComponent({
         name: t('partymeister-accounting.bookings.price_with_vat'),
         prop: 'price_with_vat',
         renderer: { type: 'currency', format: 'EUR' },
-      },
-      {
-        name: '',
-        prop: 'actions',
-        columnStyle: 'width: 200px',
-        rowWrapperClass: 'justify-content-end',
-        components: [
-          {
-            name: 'EditButton',
-            options: {
-              route: 'admin.partymeister-accounting.sales.edit',
-              name: t('global.edit'),
-            },
-          },
-          { name: 'DeleteButton', options: { name: t('global.delete') } },
-        ],
       },
     ])
 
