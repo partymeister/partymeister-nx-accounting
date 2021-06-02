@@ -8,13 +8,81 @@
       Basic information
     </h6>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
+        <FormsSelectField
+          type="text"
+          name="from_account_id"
+          id="from_account_id"
+          :label="$t('partymeister-accounting.bookings.from_account')"
+          :value="model.from_account_id"
+          :options="fromAccounts"
+        ></FormsSelectField>
+      </div>
+      <div class="col-md-6">
+        <FormsSelectField
+          type="text"
+          name="to_account_id"
+          id="to_account_id"
+          :label="$t('partymeister-accounting.bookings.to_account')"
+          :value="model.to_account_id"
+          :options="toAccounts"
+        ></FormsSelectField>
+      </div>
+      <div class="col-md-6">
+        <FormsTextAreaField
+          type="text"
+          name="description"
+          id="description"
+          :label="$t('partymeister-accounting.bookings.description')"
+          :value="model.description"
+        ></FormsTextAreaField>
+      </div>
+      <div class="col-md-6">
+        <FormsCheckboxField
+          type="text"
+          name="is_manual_booking"
+          id="is_manual_booking"
+          :label="$t('partymeister-accounting.bookings.is_manual_booking')"
+          :value="model.is_manual_booking"
+        ></FormsCheckboxField>
+      </div>
+      <div class="col-md-3">
         <FormsInputField
           type="text"
-          name="name"
-          id="name"
-          :label="$t('partymeister-accounting.bookings.name')"
-          :value="model.name"
+          name="vat_percentage"
+          id="vat_percentage"
+          :label="$t('partymeister-accounting.bookings.vat_percentage')"
+          :value="model.vat_percentage"
+          @blur="changeVatPercentage"
+        ></FormsInputField>
+      </div>
+      <div class="col-md-3">
+        <FormsInputField
+          type="text"
+          name="price_with_vat"
+          id="price_with_vat"
+          :label="$t('partymeister-accounting.bookings.price_with_vat')"
+          :value="model.price_with_vat"
+          @blur="changePriceWithVat"
+        ></FormsInputField>
+      </div>
+      <div class="col-md-3">
+        <FormsInputField
+          type="text"
+          name="price_without_vat"
+          id="price_without_vat"
+          :label="$t('partymeister-accounting.bookings.price_without_vat')"
+          :value="model.price_without_vat"
+          @blur="changePriceWithoutVat"
+        ></FormsInputField>
+      </div>
+      <div class="col-md-3">
+        <FormsInputField
+          type="text"
+          name="currency_iso_4217"
+          id="currency_iso_4217"
+          :label="$t('partymeister-accounting.accounts.currency_iso_4217')"
+          :value="model.currency_iso_4217"
         ></FormsInputField>
       </div>
     </div>
@@ -24,6 +92,9 @@
 import { defineComponent, ref } from 'vue'
 import AdminCommonForm from 'motor-core/components/admin/common/Form.vue'
 import FormsInputField from 'motor-core/components/forms/InputField.vue'
+import FormsSelectField from 'motor-core/components/forms/SelectField.vue'
+import FormsTextAreaField from 'motor-core/components/forms/TextAreaField.vue'
+import FormsCheckboxField from 'motor-core/components/forms/CheckboxField.vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import form from 'partymeister-accounting/forms/bookingForm'
@@ -33,6 +104,9 @@ export default defineComponent({
   components: {
     AdminCommonForm,
     FormsInputField,
+    FormsSelectField,
+    FormsTextAreaField,
+    FormsCheckboxField,
   },
   setup() {
     // Load i18n module
@@ -42,12 +116,10 @@ export default defineComponent({
     const router = useRouter()
 
     // Load form
-    const { model, getData, onSubmit } = form()
+    const { model, getData, onSubmit, toAccounts, fromAccounts } = form()
 
     // Set default action title
-    const title = ref(
-      t('partymeister-accounting.bookings.new')
-    )
+    const title = ref(t('partymeister-accounting.bookings.new'))
 
     // Get id from route and load record
     const id: string = router.currentRoute.value.params.id as string
@@ -56,10 +128,57 @@ export default defineComponent({
       getData(id)
     }
 
+    const changeVatPercentage = (value: string) => {
+      if (typeof value !== 'object') {
+        const newPrice =
+          Math.ceil(
+            (document.getElementById('price_with_vat').value /
+              (1 + value / 100)) *
+              100
+          ) / 100
+        document.getElementById('price_without_vat').value = newPrice
+        model.value.price_without_vat = newPrice
+      }
+    }
+
+    const changePriceWithVat = (value: number) => {
+      if (typeof value !== 'object') {
+        const price = String(value).replace(',', '.')
+        const newPrice =
+          Math.ceil(
+            (price /
+              (1 + document.getElementById('vat_percentage').value / 100)) *
+              100
+          ) / 100
+
+        document.getElementById('price_without_vat').value = newPrice
+        model.value.price_without_vat = newPrice
+      }
+    }
+
+    const changePriceWithoutVat = (value: number) => {
+      if (typeof value !== 'object') {
+        const price = String(value).replace(',', '.')
+        const newPrice =
+          Math.ceil(
+            price *
+              (1 + document.getElementById('vat_percentage').value / 100) *
+              100
+          ) / 100
+        document.getElementById('price_with_vat').value = newPrice
+        model.value.price_with_vat = newPrice
+      }
+    }
+
     return {
       model,
       title,
       onSubmit,
+      toAccounts,
+      fromAccounts,
+      changeVatPercentage,
+      changePriceWithVat,
+      changePriceWithoutVat,
     }
   },
 })
