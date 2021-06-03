@@ -1,10 +1,6 @@
 <template>
   <AdminCommonGrid
-    :name="
-      $t(
-        'partymeister-accounting.item_types.item_types'
-      )
-    "
+    :name="$t('partymeister-accounting.item_types.item_types')"
     create-route="admin.partymeister-accounting.item-types.create"
     :create-label="$t('partymeister-accounting.item_types.new')"
     :rows="rows"
@@ -46,10 +42,6 @@ export default defineComponent({
         prop: 'item_count',
       },
       {
-        name: t('partymeister-accounting.items.items'),
-        prop: 'item_count',
-      },
-      {
         name: t('motor-backend.global.sort_position'),
         prop: 'sort_position',
       },
@@ -67,8 +59,7 @@ export default defineComponent({
           {
             name: 'EditButton',
             options: {
-              route:
-                'admin.partymeister-accounting.item-types.edit',
+              route: 'admin.partymeister-accounting.item-types.edit',
               name: t('global.edit'),
             },
           },

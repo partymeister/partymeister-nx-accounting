@@ -53,7 +53,7 @@
           id="vat_percentage"
           :label="$t('partymeister-accounting.bookings.vat_percentage')"
           :value="model.vat_percentage"
-          @blur="changeVatPercentage"
+          @blur="changeVatPercentage($event, ['price_without_vat'])"
         ></FormsInputField>
       </div>
       <div class="col-md-3">
@@ -63,7 +63,7 @@
           id="price_with_vat"
           :label="$t('partymeister-accounting.bookings.price_with_vat')"
           :value="model.price_with_vat"
-          @blur="changePriceWithVat"
+          @blur="changePriceWithVat($event, ['price_without_vat'])"
         ></FormsInputField>
       </div>
       <div class="col-md-3">
@@ -73,7 +73,7 @@
           id="price_without_vat"
           :label="$t('partymeister-accounting.bookings.price_without_vat')"
           :value="model.price_without_vat"
-          @blur="changePriceWithoutVat"
+          @blur="changePriceWithoutVat($event, ['price_with_vat'])"
         ></FormsInputField>
       </div>
       <div class="col-md-3">
@@ -98,6 +98,7 @@ import FormsCheckboxField from 'motor-core/components/forms/CheckboxField.vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import form from 'partymeister-accounting/forms/bookingForm'
+import useVatCalculator from '../../../compositions/helpers/useVatCalculator'
 
 export default defineComponent({
   name: 'admin-partymeister-accounting-bookings-create',
@@ -128,47 +129,8 @@ export default defineComponent({
       getData(id)
     }
 
-    const changeVatPercentage = (value: string) => {
-      if (typeof value !== 'object') {
-        const newPrice =
-          Math.ceil(
-            (document.getElementById('price_with_vat').value /
-              (1 + value / 100)) *
-              100
-          ) / 100
-        document.getElementById('price_without_vat').value = newPrice
-        model.value.price_without_vat = newPrice
-      }
-    }
-
-    const changePriceWithVat = (value: number) => {
-      if (typeof value !== 'object') {
-        const price = String(value).replace(',', '.')
-        const newPrice =
-          Math.ceil(
-            (price /
-              (1 + document.getElementById('vat_percentage').value / 100)) *
-              100
-          ) / 100
-
-        document.getElementById('price_without_vat').value = newPrice
-        model.value.price_without_vat = newPrice
-      }
-    }
-
-    const changePriceWithoutVat = (value: number) => {
-      if (typeof value !== 'object') {
-        const price = String(value).replace(',', '.')
-        const newPrice =
-          Math.ceil(
-            price *
-              (1 + document.getElementById('vat_percentage').value / 100) *
-              100
-          ) / 100
-        document.getElementById('price_with_vat').value = newPrice
-        model.value.price_with_vat = newPrice
-      }
-    }
+    const { changeVatPercentage, changePriceWithVat, changePriceWithoutVat } =
+      useVatCalculator(model)
 
     return {
       model,

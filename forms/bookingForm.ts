@@ -34,7 +34,7 @@ export default function bookingForm() {
   // Sanitize dates
   const sanitizer = () => {}
 
-  // Get schedules from api
+  // Get accounts from api
   const fromAccounts = ref([])
   const toAccounts = ref([])
   const accountRepo: Repository = accountRepository(axios)
