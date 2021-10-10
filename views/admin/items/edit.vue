@@ -15,6 +15,7 @@
           id="name"
           :label="$t('partymeister-accounting.items.name')"
           :value="model.name"
+          :valueProp="name"
         ></FormsInputField>
       </div>
       <div class="col-md-6">
@@ -164,7 +165,7 @@
   </AdminCommonForm>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 import AdminCommonForm from 'motor-core/components/admin/common/Form.vue'
 import FormsInputField from 'motor-core/components/forms/InputField.vue'
 import FormsSelectField from 'motor-core/components/forms/SelectField.vue'
@@ -192,7 +193,17 @@ export default defineComponent({
     const router = useRouter()
 
     // Load form
-    const { model, getData, onSubmit, accounts, itemTypes, items } = form()
+    const {
+      model,
+      getData,
+      onSubmit,
+      accounts,
+      itemTypes,
+      items,
+      changePriceWithVat,
+      changePriceWithoutVat,
+      changeVatPercentage,
+    } = form()
 
     // Set default action title
     const title = ref(t('partymeister-accounting.items.new'))
@@ -204,8 +215,9 @@ export default defineComponent({
       getData(id)
     }
 
-    const { changeVatPercentage, changePriceWithVat, changePriceWithoutVat } =
-      useVatCalculator(model)
+    watch(model, (value) => {
+      console.log('watched model in form', value)
+    })
 
     return {
       model,

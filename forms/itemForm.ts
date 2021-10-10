@@ -1,13 +1,14 @@
 import axios from 'axios'
 import baseForm from 'motor-core/forms/baseForm'
 import * as yup from 'yup'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import modelRepository from 'partymeister-accounting/api/item'
 import Repository from 'motor-core/types/repository'
 import accountRepository from '../api/account'
 import itemTypeRepository from '../api/itemType'
 import itemRepository from '../api/item'
+import useVatCalculator from '../compositions/helpers/useVatCalculator'
 
 export default function itemForm() {
   // Load i18n module
@@ -95,7 +96,7 @@ export default function itemForm() {
     items.value = options
   })
 
-  const { getData, onSubmit } = baseForm(
+  const { getData, onSubmit, setFieldValue } = baseForm(
     'partymeister-accounting.items',
     'admin.partymeister-accounting.items',
     modelRepository(axios),
@@ -104,6 +105,12 @@ export default function itemForm() {
     sanitizer
   )
 
+  const { changeVatPercentage, changePriceWithVat, changePriceWithoutVat } =
+    useVatCalculator(model, setFieldValue)
+
+  watch(model, (value) => {
+    console.log(value)
+  })
   return {
     getData,
     onSubmit,
@@ -111,5 +118,8 @@ export default function itemForm() {
     accounts,
     itemTypes,
     items,
+    changeVatPercentage,
+    changePriceWithVat,
+    changePriceWithoutVat,
   }
 }
