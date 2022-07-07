@@ -5,7 +5,7 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import modelRepository from 'partymeister-accounting/api/itemType'
 
-export default function itemTypeForm() {
+export default function useItemTypeForm() {
   // Load i18n module
   const { t, tm } = useI18n()
 

@@ -97,8 +97,8 @@ import FormsTextAreaField from 'motor-core/components/forms/TextAreaField.vue'
 import FormsCheckboxField from 'motor-core/components/forms/CheckboxField.vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import form from 'partymeister-accounting/forms/bookingForm'
-import useVatCalculator from '../../../compositions/helpers/useVatCalculator'
+import useVatCalculator from '../../../composables/useVatCalculator'
+import useBookingForm from "packages/partymeister-nx-accounting/forms/bookingForm";
 
 export default defineComponent({
   name: 'admin-partymeister-accounting-bookings-create',
@@ -117,7 +117,7 @@ export default defineComponent({
     const router = useRouter()
 
     // Load form
-    const { model, getData, onSubmit, toAccounts, fromAccounts } = form()
+    const form = useBookingForm()
 
     // Set default action title
     const title = ref(t('partymeister-accounting.bookings.new'))
@@ -126,18 +126,15 @@ export default defineComponent({
     const id: string = router.currentRoute.value.params.id as string
     if (id) {
       title.value = t('partymeister-accounting.bookings.edit')
-      getData(id)
+      form.getData(id)
     }
 
     const { changeVatPercentage, changePriceWithVat, changePriceWithoutVat } =
-      useVatCalculator(model)
+      useVatCalculator(form.model)
 
     return {
-      model,
+      ...form,
       title,
-      onSubmit,
-      toAccounts,
-      fromAccounts,
       changeVatPercentage,
       changePriceWithVat,
       changePriceWithoutVat,

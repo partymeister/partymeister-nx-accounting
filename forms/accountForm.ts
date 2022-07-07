@@ -7,7 +7,7 @@ import modelRepository from 'partymeister-accounting/api/account'
 import Repository from "../../motor-nx-core/types/repository";
 import accountTypeRepository from "../../partymeister-nx-accounting/api/accountType";
 
-export default function accountForm() {
+export default function useAccountForm() {
     // Load i18n module
     const { t, tm } = useI18n()
 

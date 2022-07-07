@@ -8,9 +8,9 @@ import Repository from 'motor-core/types/repository'
 import accountRepository from '../api/account'
 import itemTypeRepository from '../api/itemType'
 import itemRepository from '../api/item'
-import useVatCalculator from '../compositions/helpers/useVatCalculator'
+import useVatCalculator from '../composables/useVatCalculator'
 
-export default function itemForm() {
+export default function useItemForm() {
   // Load i18n module
   const { t, tm } = useI18n()
 

@@ -26,7 +26,7 @@ import AdminCommonForm from 'motor-core/components/admin/common/Form.vue'
 import FormsInputField from 'motor-core/components/forms/InputField.vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import form from 'partymeister-accounting/forms/accountTypeForm'
+import useAccountTypeForm from "packages/partymeister-nx-accounting/forms/accountTypeForm";
 
 export default defineComponent({
   name: 'admin-partymeister-accounting-account-types-create',
@@ -42,7 +42,7 @@ export default defineComponent({
     const router = useRouter()
 
     // Load form
-    const { model, getData, onSubmit } = form()
+    const form = useAccountTypeForm();
 
     // Set default action title
     const title = ref(
@@ -53,13 +53,12 @@ export default defineComponent({
     const id: string = router.currentRoute.value.params.id as string
     if (id) {
       title.value = t('partymeister-accounting.account_types.edit')
-      getData(id)
+      form.getData(id)
     }
 
     return {
-      model,
       title,
-      onSubmit,
+      ...form
     }
   },
 })

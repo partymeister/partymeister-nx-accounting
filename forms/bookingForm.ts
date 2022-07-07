@@ -7,7 +7,7 @@ import modelRepository from 'partymeister-accounting/api/booking'
 import Repository from 'motor-core/types/repository'
 import accountRepository from 'partymeister-accounting/api/account'
 
-export default function bookingForm() {
+export default function useBookingForm() {
   // Load i18n module
   const { t, tm } = useI18n()
 
