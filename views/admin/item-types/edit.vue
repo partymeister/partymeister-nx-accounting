@@ -45,7 +45,7 @@ import FormsInputField from 'motor-core/components/forms/InputField.vue'
 import FormsCheckboxField from 'motor-core/components/forms/CheckboxField.vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import useItemTypeForm from "packages/partymeister-nx-accounting/forms/itemTypeForm";
+import form from 'partymeister-accounting/forms/itemTypeForm'
 
 export default defineComponent({
   name: 'admin-partymeister-accounting-item-types-create',
@@ -62,7 +62,7 @@ export default defineComponent({
     const router = useRouter()
 
     // Load form
-    const { model, getData, onSubmit } = useItemTypeForm()
+    const { model, getData, onSubmit } = form()
 
     // Set default action title
     const title = ref(t('partymeister-accounting.item_types.new'))

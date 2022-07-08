@@ -173,7 +173,8 @@ import FormsCheckboxField from 'motor-core/components/forms/CheckboxField.vue'
 import FormsTextAreaField from 'motor-core/components/forms/TextAreaField.vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import useItemForm from "packages/partymeister-nx-accounting/forms/itemForm";
+import form from 'partymeister-accounting/forms/itemForm'
+import useVatCalculator from '../../../compositions/helpers/useVatCalculator'
 
 export default defineComponent({
   name: 'admin-partymeister-accounting-items-create',
@@ -192,7 +193,17 @@ export default defineComponent({
     const router = useRouter()
 
     // Load form
-    const form = useItemForm()
+    const {
+      model,
+      getData,
+      onSubmit,
+      accounts,
+      itemTypes,
+      items,
+      changePriceWithVat,
+      changePriceWithoutVat,
+      changeVatPercentage,
+    } = form()
 
     // Set default action title
     const title = ref(t('partymeister-accounting.items.new'))
@@ -201,16 +212,23 @@ export default defineComponent({
     const id: string = router.currentRoute.value.params.id as string
     if (id) {
       title.value = t('partymeister-accounting.items.edit')
-      form.getData(id)
+      getData(id)
     }
 
-    watch(form.model, (value) => {
+    watch(model, (value) => {
       console.log('watched model in form', value)
     })
 
     return {
+      model,
       title,
-      ...form
+      onSubmit,
+      accounts,
+      itemTypes,
+      items,
+      changeVatPercentage,
+      changePriceWithVat,
+      changePriceWithoutVat,
     }
   },
 })

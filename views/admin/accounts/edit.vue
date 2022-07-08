@@ -57,7 +57,7 @@ import FormsCheckboxField from 'motor-core/components/forms/CheckboxField.vue'
 
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import useAccountForm from "packages/partymeister-nx-accounting/forms/accountForm";
+import form from 'partymeister-accounting/forms/accountForm'
 
 export default defineComponent({
   name: 'admin-partymeister-accounting-accounts-create',
@@ -75,7 +75,7 @@ export default defineComponent({
     const router = useRouter()
 
     // Load form
-    const form = useAccountForm();
+    const { model, getData, onSubmit, accountTypes } = form()
 
     // Set default action title
     const title = ref(
@@ -86,12 +86,14 @@ export default defineComponent({
     const id: string = router.currentRoute.value.params.id as string
     if (id) {
       title.value = t('partymeister-accounting.accounts.edit')
-      form.getData(id)
+      getData(id)
     }
 
     return {
+      model,
       title,
-      ...form
+      onSubmit,
+      accountTypes
     }
   },
 })

@@ -1,4 +1,4 @@
-import Ref from '../../motor-nx-core/types/model'
+import Ref from '../../../motor-nx-core/types/model'
 
 export default function useVatCalculator(model: Ref<any>, setFieldValue: any) {
   const changeVatPercentage = (value: string, elements: []) => {
