@@ -1,11 +1,11 @@
 import axios from 'axios'
-import useBaseGrid from "motor-core/grids/baseGrid";
+import baseGrid from 'motor-core/grids/baseGrid'
 import modelRepository from 'partymeister-accounting/api/sale'
 
-export default function useSaleGrid() {
+export default function saleGrid() {
     const repository = modelRepository(axios)
 
-    const { rows, meta, refreshRecords, handleCellEvent } = useBaseGrid(
+    const { rows, meta, refreshRecords, handleCellEvent } = baseGrid(
         repository,
         'partymeister-accounting.sales'
     )
