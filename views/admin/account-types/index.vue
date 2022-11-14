@@ -24,7 +24,7 @@ import { defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import EditButton from 'motor-core/components/admin/cell/EditButton.vue'
 import DeleteButton from 'motor-core/components/admin/cell/DeleteButton.vue'
-import useAccountTypeGrid from 'packages/partymeister-nx-accounting/grids/accountTypeGrid'
+import accountTypeGrid from '../../../grids/accountTypeGrid'
 
 export default defineComponent({
   name: 'admin-partymeister-accounting.account-types',
@@ -66,7 +66,7 @@ export default defineComponent({
     const loadComponents = <any>[]
 
     // WE START THE OUTSOURCED CODE HERE
-    const { rows, meta, refreshRecords, handleCellEvent } = useAccountTypeGrid()
+    const { rows, meta, refreshRecords, handleCellEvent } = accountTypeGrid()
     return {
       columns,
       filters,

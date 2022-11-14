@@ -1,11 +1,11 @@
 import axios from 'axios'
-import useBaseGrid from "motor-core/grids/baseGrid";
+import callbackGrid from "motor-core/grids/baseGrid";
 import modelRepository from 'partymeister-accounting/api/booking'
 
-export default function useBookingGrid() {
+export default function bookingGrid() {
     const repository = modelRepository(axios)
 
-    const { rows, meta, refreshRecords, handleCellEvent } = useBaseGrid(
+    const { rows, meta, refreshRecords, handleCellEvent } = callbackGrid(
         repository,
         'partymeister-accounting.bookings'
     )

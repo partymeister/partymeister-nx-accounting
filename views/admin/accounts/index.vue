@@ -21,7 +21,7 @@ import { defineComponent, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import EditButton from 'motor-core/components/admin/cell/EditButton.vue'
 import DeleteButton from 'motor-core/components/admin/cell/DeleteButton.vue'
-import useAccountGrid from 'packages/partymeister-nx-accounting/grids/accountGrid'
+import accountGrid from '../../../grids/accountGrid'
 import AccountBalance from '../../../components/admin/AccountBalance.vue'
 
 export default defineComponent({
@@ -37,7 +37,7 @@ export default defineComponent({
     // Define columns for grid
     const columns = ref([
       {
-        name: t('motor-backend.global.name'),
+        name: t('motor-admin.global.name'),
         prop: 'name',
       },
       {
@@ -87,7 +87,7 @@ export default defineComponent({
     const loadComponents = <any>[]
 
     // WE START THE OUTSOURCED CODE HERE
-    const { rows, meta, refreshRecords, handleCellEvent } = useAccountGrid()
+    const { rows, meta, refreshRecords, handleCellEvent } = accountGrid()
 
     const balance = ref('0.00 EUR')
 

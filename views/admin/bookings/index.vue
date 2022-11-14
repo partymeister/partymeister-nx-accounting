@@ -20,7 +20,7 @@ import { defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import EditButton from 'motor-core/components/admin/cell/EditButton.vue'
 import DeleteButton from 'motor-core/components/admin/cell/DeleteButton.vue'
-import useBookingGrid from 'packages/partymeister-nx-accounting/grids/bookingGrid'
+import bookingGrid from '../../../grids/bookingGrid'
 import accountRepository from 'partymeister-accounting/api/account'
 import axios from 'axios'
 
@@ -131,7 +131,7 @@ export default defineComponent({
     const loadComponents = <any>[]
 
     // WE START THE OUTSOURCED CODE HERE
-    const { rows, meta, refreshRecords, handleCellEvent } = useBookingGrid()
+    const { rows, meta, refreshRecords, handleCellEvent } = bookingGrid()
     return {
       columns,
       filters,

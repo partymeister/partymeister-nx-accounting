@@ -32,7 +32,7 @@
           type="text"
           name="name"
           id="name"
-          :label="$t('motor-backend.global.name')"
+          :label="$t('motor-admin.global.name')"
           :value="model.name"
         ></FormsInputField>
       </div>

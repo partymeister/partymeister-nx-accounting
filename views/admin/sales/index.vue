@@ -18,7 +18,7 @@ import { defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import EditButton from 'motor-core/components/admin/cell/EditButton.vue'
 import DeleteButton from 'motor-core/components/admin/cell/DeleteButton.vue'
-import useSaleGrid from 'packages/partymeister-nx-accounting/grids/saleGrid'
+import saleGrid from '../../../grids/saleGrid'
 
 export default defineComponent({
   name: 'admin-partymeister-accounting.sales',
@@ -57,7 +57,7 @@ export default defineComponent({
     const loadComponents = <any>[]
 
     // WE START THE OUTSOURCED CODE HERE
-    const { rows, meta, refreshRecords, handleCellEvent } = useSaleGrid()
+    const { rows, meta, refreshRecords, handleCellEvent } = saleGrid()
     return {
       columns,
       filters,

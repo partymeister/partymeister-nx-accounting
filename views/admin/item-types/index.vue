@@ -20,7 +20,7 @@ import { defineComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import EditButton from 'motor-core/components/admin/cell/EditButton.vue'
 import DeleteButton from 'motor-core/components/admin/cell/DeleteButton.vue'
-import useItemTypeGrid from 'packages/partymeister-nx-accounting/grids/itemTypeGrid'
+import itemTypeGrid from '../../../grids/itemTypeGrid'
 
 export default defineComponent({
   name: 'admin-partymeister-accounting.item-types',
@@ -34,7 +34,7 @@ export default defineComponent({
     // Define columns for grid
     const columns = ref([
       {
-        name: t('motor-backend.global.name'),
+        name: t('motor-admin.global.name'),
         prop: 'name',
       },
       {
@@ -42,11 +42,11 @@ export default defineComponent({
         prop: 'item_count',
       },
       {
-        name: t('motor-backend.global.sort_position'),
+        name: t('motor-admin.global.sort_position'),
         prop: 'sort_position',
       },
       {
-        name: t('motor-backend.global.is_visible'),
+        name: t('motor-admin.global.is_visible'),
         prop: 'is_visible',
         renderer: { type: 'boolean' },
       },
@@ -74,7 +74,7 @@ export default defineComponent({
     const loadComponents = <any>[]
 
     // WE START THE OUTSOURCED CODE HERE
-    const { rows, meta, refreshRecords, handleCellEvent } = useItemTypeGrid()
+    const { rows, meta, refreshRecords, handleCellEvent } = itemTypeGrid()
     return {
       columns,
       filters,

@@ -22,7 +22,7 @@
           type="text"
           name="sort_position"
           id="sort_position"
-          :label="$t('motor-backend.global.sort_position')"
+          :label="$t('motor-admin.global.sort_position')"
           :value="model.sort_position"
         ></FormsInputField>
       </div>
@@ -31,7 +31,7 @@
           type="text"
           name="is_visible"
           id="is_visible"
-          :label="$t('motor-backend.global.is_visible')"
+          :label="$t('motor-admin.global.is_visible')"
           :value="model.is_visible"
         ></FormsCheckboxField>
       </div>
